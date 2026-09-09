@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192" fill="none">
+  <defs>
+    <linearGradient id="claudeBody" x1="96" y1="26" x2="96" y2="164" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7DEBA"/>
+      <stop offset="1" stop-color="#B27A4A"/>
+    </linearGradient>
+    <linearGradient id="claudeSuit" x1="96" y1="98" x2="96" y2="172" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFC56A"/>
+      <stop offset="1" stop-color="#81551E"/>
+    </linearGradient>
+  </defs>
+  <rect x="44" y="18" width="104" height="104" rx="28" fill="url(#claudeBody)" stroke="#2C1C10" stroke-width="10"/>
+  <rect x="58" y="38" width="76" height="64" rx="14" fill="#302116" opacity="0.9"/>
+  <circle cx="78" cy="68" r="10" fill="#FFC56A"/>
+  <circle cx="114" cy="68" r="10" fill="#FFC56A"/>
+  <path d="M78 92C88 98 104 98 114 92" stroke="#F7E5C5" stroke-width="8" stroke-linecap="round"/>
+  <rect x="82" y="118" width="28" height="20" rx="8" fill="#E5BF8B" stroke="#2C1C10" stroke-width="6"/>
+  <path d="M50 144C50 127.431 63.431 114 80 114H112C128.569 114 142 127.431 142 144V160C142 167.732 135.732 174 128 174H64C56.268 174 50 167.732 50 160V144Z" fill="url(#claudeSuit)" stroke="#5B3B16" stroke-width="10"/>
+  <rect x="68" y="138" width="56" height="14" rx="7" fill="#FFF0C7" opacity="0.38"/>
+  <path d="M70 28L82 12H110L122 28" stroke="#2C1C10" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M60 150H132" stroke="#2C1C10" stroke-width="6" stroke-linecap="round" opacity="0.5"/>
+</svg>

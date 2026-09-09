@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192" fill="none">
+  <defs>
+    <linearGradient id="codexBody" x1="96" y1="28" x2="96" y2="164" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F0D0A0"/>
+      <stop offset="1" stop-color="#9E6E3F"/>
+    </linearGradient>
+    <linearGradient id="codexSuit" x1="96" y1="90" x2="96" y2="170" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5DF6A5"/>
+      <stop offset="1" stop-color="#1E6E49"/>
+    </linearGradient>
+  </defs>
+  <rect x="40" y="20" width="112" height="100" rx="20" fill="url(#codexBody)" stroke="#2C1C10" stroke-width="10"/>
+  <rect x="56" y="36" width="80" height="68" rx="12" fill="#342416" opacity="0.9"/>
+  <rect x="66" y="52" width="18" height="18" rx="4" fill="#5DF6A5"/>
+  <rect x="108" y="52" width="18" height="18" rx="4" fill="#5DF6A5"/>
+  <rect x="78" y="82" width="36" height="10" rx="5" fill="#EED7AF"/>
+  <rect x="84" y="120" width="24" height="18" rx="8" fill="#E6C590" stroke="#2C1C10" stroke-width="6"/>
+  <path d="M54 138C54 122.536 66.536 110 82 110H110C125.464 110 138 122.536 138 138V158C138 165.732 131.732 172 124 172H68C60.268 172 54 165.732 54 158V138Z" fill="url(#codexSuit)" stroke="#173626" stroke-width="10"/>
+  <rect x="70" y="134" width="52" height="14" rx="7" fill="#D7FFF1" opacity="0.48"/>
+  <circle cx="68" cy="154" r="8" fill="#1B2B21"/>
+  <circle cx="124" cy="154" r="8" fill="#1B2B21"/>
+  <path d="M64 26L74 10H118L128 26" stroke="#2C1C10" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,40 @@
+{
+  "name": "pixel-office",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Capsule Office: a desktop control room for local Claude Code and Codex CLI agents.",
+  "license": "MIT",
+  "homepage": "https://chenzhiyong1994.github.io/capsule-office/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chenzhiyong1994/capsule-office.git"
+  },
+  "bugs": "https://github.com/chenzhiyong1994/capsule-office/issues",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"wait-on tcp:5173 && electron . --dev\"",
+    "start": "electron .",
+    "build": "vite build",
+    "app": "npm run build && npm run start",
+    "build:site": "node scripts/build-site.mjs",
+    "preview:site": "vite preview --outDir site-dist --host 127.0.0.1 --port 4174",
+    "check:runtime": "electron scripts/smoke-desktop.cjs"
+  },
+  "dependencies": {
+    "@xterm/addon-fit": "^0.11.0",
+    "@xterm/xterm": "^6.0.0",
+    "electron": "^44.3.0",
+    "node-pty": "^1.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.4",
+    "concurrently": "^9.2.1",
+    "vite": "^7.1.7",
+    "wait-on": "^8.0.3"
+  }
+}

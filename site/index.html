@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b1115" />
+    <title>Capsule Office 胶囊办公室 · 给 AI 团队一个工作空间</title>
+    <meta
+      name="description"
+      content="把 Claude Code 和 Codex CLI 放进同一间胶囊办公室。管理本地 Agent 会话、操作真实终端、查看上下文与用量。MIT 开源，Windows 桌面应用。"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Capsule Office · 胶囊办公室" />
+    <meta
+      property="og:description"
+      content="给 AI 团队一个工作空间。面向 Claude Code 与 Codex CLI 的开源桌面控制室。"
+    />
+    <meta
+      property="og:url"
+      content="https://chenzhiyong1994.github.io/capsule-office/"
+    />
+    <meta
+      property="og:image"
+      content="https://chenzhiyong1994.github.io/capsule-office/assets/preview-midnight.jpg"
+    />
+    <link
+      rel="canonical"
+      href="https://chenzhiyong1994.github.io/capsule-office/"
+    />
+    <link rel="icon" type="image/svg+xml" href="./assets/capsule.svg" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./main.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <header class="site-header wrap">
+      <a class="brand" href="./" aria-label="Capsule Office 首页"
+        ><img src="./assets/capsule.svg" width="38" height="38" alt="" /><span
+          >capsule<span class="brand-light">office</span
+          ><small>胶囊办公室</small></span
+        ></a
+      >
+      <nav aria-label="主导航">
+        <a href="#features">功能</a><a href="#workspace">工作空间</a
+        ><a href="#start">开始使用</a>
+      </nav>
+      <a
+        class="github-link"
+        href="https://github.com/chenzhiyong1994/capsule-office"
+        >GitHub <span aria-hidden="true">↗</span></a
+      >
+    </header>
+    <main id="main">
+      <section class="hero wrap" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">
+            <span class="status-light"></span> OPEN SOURCE · LOCAL AGENTS
+          </p>
+          <h1 id="hero-title">
+            给 AI 团队，<br />一间<span class="accent">办公室。</span>
+          </h1>
+          <p class="hero-description">
+            把 Claude Code 和 Codex CLI
+            请进同一个工作空间。切换会话、接管终端、查看状态，让每一份进行中的工作都有自己的位置。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#start"
+              >搭建我的办公室 <span aria-hidden="true">↗</span></a
+            ><a class="button secondary" href="./demo/"
+              >进入界面演示 <span aria-hidden="true">→</span></a
+            >
+          </div>
+          <p class="hero-note">
+            Windows 桌面应用 <span>·</span> MIT 许可证 <span>·</span> v0.1.0
+          </p>
+        </div>
+        <div
+          class="office-visual"
+          aria-label="工作区概念示意，显示五个工位与两个模拟 Agent"
+        >
+          <div class="visual-heading">
+            <span
+              ><span class="status-light"></span> CAPSULE / CONTROL ROOM</span
+            ><span>01—05</span>
+          </div>
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <span class="visual-coordinate coordinate-top"
+            >YOUR LOCAL WORKSPACE</span
+          >
+          <div class="mini-window">
+            <div class="mini-title">
+              <span class="window-dots"><i></i><i></i><i></i></span
+              ><span>office.workspace</span
+              ><span class="mini-local">LOCAL</span>
+            </div>
+            <div class="mini-body">
+              <div class="mini-roster">
+                <span class="mini-label">THE TEAM</span>
+                <div class="mini-agent active">
+                  <span class="agent-avatar">C<span>_</span></span>
+                  <div>
+                    Claude Code<small><i></i> 工作中</small>
+                  </div>
+                  <span class="agent-number">01</span>
+                </div>
+                <div class="mini-agent">
+                  <span class="agent-avatar amber">&gt;_</span>
+                  <div>
+                    Codex CLI<small class="amber-text"><i></i> 待命</small>
+                  </div>
+                  <span class="agent-number">02</span>
+                </div>
+                <div class="mini-vacancy">
+                  <span>＋</span> 为下一个想法留个位置
+                </div>
+              </div>
+              <div class="mini-terminal">
+                <span class="mini-label">SESSION / 01</span>
+                <p><span class="accent">❯</span> 一个项目，一次专注。</p>
+                <p class="terminal-comment">// ideas become things</p>
+                <div class="code-line"><i></i><b></b><em></em></div>
+                <div class="code-line line-two"><i></i><b></b></div>
+                <div class="code-line line-three"><i></i><b></b><em></em></div>
+                <div class="mini-cursor"></div>
+                <div class="mini-meter">
+                  <span>CONTEXT <b>38%</b></span>
+                  <div><i></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="mini-footer">
+              <span><i class="status-light"></i> 2 / 5 工位已就绪</span
+              ><span>PTY CONNECTED</span>
+            </div>
+          </div>
+          <div class="pod-strip" aria-hidden="true">
+            <span class="pod occupied">01<i></i></span
+            ><span class="pod occupied amber-pod">02<i></i></span
+            ><span class="pod">03<i></i></span><span class="pod">04<i></i></span
+            ><span class="pod">05<i></i></span>
+          </div>
+          <span class="visual-coordinate coordinate-bottom"
+            >工作区概念示意 · 模拟状态</span
+          >
+        </div>
+      </section>
+      <div class="facts wrap" aria-label="项目概览">
+        <div>
+          <span class="fact-value">02</span
+          ><span>CLI 工具接入<small>Claude Code + Codex CLI</small></span>
+        </div>
+        <div>
+          <span class="fact-value">05</span
+          ><span>独立 Agent 工位<small>各自关联项目与会话</small></span>
+        </div>
+        <div>
+          <span class="fact-value">PTY</span
+          ><span>直接操作真实终端<small>保留熟悉的 CLI 工作流</small></span>
+        </div>
+        <div>
+          <span class="fact-value">MIT</span
+          ><span>开放源码，自由探索<small>在自己的电脑上运行</small></span>
+        </div>
+      </div>
+      <section
+        class="section wrap"
+        id="features"
+        aria-labelledby="features-title"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">01 / A PLACE FOR EVERY AGENT</p>
+            <h2 id="features-title">工作有条理，<br />灵感有空间。</h2>
+          </div>
+          <p>把分散的会话放在眼前。<br />你来安排工作，办公室帮你看清进展。</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature">
+            <span class="feature-symbol" aria-hidden="true">⌘</span
+            ><span class="feature-index">01</span>
+            <h3>一人一席，各就各位</h3>
+            <p>
+              给 Agent 起名、分配项目目录、添加场景标签。在最多 5
+              个独立会话之间切换，随时找到正在做的事。
+            </p>
+            <span class="feature-detail">EMPLOYEES / PROJECTS / SESSIONS</span>
+          </article>
+          <article class="feature">
+            <span class="feature-symbol" aria-hidden="true">&gt;_</span
+            ><span class="feature-index">02</span>
+            <h3>熟悉的终端，就在手边</h3>
+            <p>
+              通过 xterm.js 与本地 PTY 操作 CLI。输入命令、发送
+              ESC、启停会话，继续使用你熟悉的交互方式。
+            </p>
+            <span class="feature-detail">REAL TERMINAL / DIRECT CONTROL</span>
+          </article>
+          <article class="feature">
+            <span class="feature-symbol" aria-hidden="true">▥</span
+            ><span class="feature-index">03</span>
+            <h3>状态与用量，一眼看清</h3>
+            <p>
+              查看上下文压力、运行时长和费用估算。指标区分真实值与估算值，自定义单价用于费用计算。
+            </p>
+            <span class="feature-detail">CONTEXT / RUNTIME / ESTIMATES</span>
+          </article>
+        </div>
+      </section>
+      <section
+        class="workspace-section"
+        id="workspace"
+        aria-labelledby="workspace-title"
+      >
+        <div class="wrap">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">02 / MAKE YOURSELF AT HOME</p>
+              <h2 id="workspace-title">你的工作空间，<br />也可以很有个性。</h2>
+            </div>
+            <div class="theme-picker" role="group" aria-label="选择截图主题">
+              <button type="button" data-theme="midnight" aria-pressed="true">
+                <i class="swatch midnight"></i>黑夜</button
+              ><button type="button" data-theme="daylight" aria-pressed="false">
+                <i class="swatch daylight"></i>白昼</button
+              ><button type="button" data-theme="wood" aria-pressed="false">
+                <i class="swatch wood"></i>木质
+              </button>
+            </div>
+          </div>
+          <figure class="product-frame">
+            <div class="product-chrome">
+              <span><i class="status-light"></i> CAPSULE OFFICE</span
+              ><span id="preview-label">黑夜 / MIDNIGHT</span
+              ><span>INTERFACE PREVIEW</span>
+            </div>
+            <img
+              id="product-preview"
+              src="./assets/preview-midnight.jpg"
+              width="1600"
+              height="980"
+              alt="胶囊办公室黑夜主题界面：左侧员工列表、中间终端、右侧会话状态与用量"
+              loading="lazy"
+            />
+            <figcaption>
+              <span>真实应用界面 · 截图使用浏览器模拟数据</span
+              ><a href="./demo/"
+                >打开可交互演示 <span aria-hidden="true">↗</span></a
+              >
+            </figcaption>
+          </figure>
+          <p class="preview-note">
+            在线演示可切换主题、查看员工和模拟启停；真实
+            CLI、项目目录访问与终端输入需在本地桌面应用中使用。
+          </p>
+        </div>
+      </section>
+      <section
+        class="section start-section wrap"
+        id="start"
+        aria-labelledby="start-title"
+      >
+        <div class="start-copy">
+          <p class="eyebrow">03 / YOUR OFFICE IS ONE CLONE AWAY</p>
+          <h2 id="start-title">下一个好点子，<br />从这里开工。</h2>
+          <p>
+            准备好 Windows、Git 和 Node.js 22.12+，<br />在本机安装并登录 Claude
+            Code 或 Codex CLI。
+          </p>
+          <a
+            class="text-link"
+            href="https://github.com/chenzhiyong1994/capsule-office#快速开始"
+            >阅读完整安装说明 <span aria-hidden="true">↗</span></a
+          >
+          <div class="setup-note">
+            <strong>第一次启动</strong>
+            <p>
+              点击「新增员工」，选择 Agent
+              和项目目录。权限模式建议先选「标准确认」；当前应用默认的「高风险自动确认」会跳过
+              CLI 审批，Codex 模式还会禁用沙箱。
+            </p>
+          </div>
+        </div>
+        <div class="install-card">
+          <div class="install-head">
+            <span>TERMINAL / 本地安装</span
+            ><button id="copy-commands" type="button" hidden>复制命令</button>
+          </div>
+          <pre><code id="install-commands">git clone https://github.com/chenzhiyong1994/capsule-office.git
+cd capsule-office
+npm ci
+npm run app</code></pre>
+          <div class="install-bottom">
+            <span class="status-light"></span> 从源码启动 · 暂无安装包
+          </div>
+          <p
+            id="copy-status"
+            class="copy-status"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </div>
+      </section>
+      <section class="open-source wrap" aria-labelledby="open-source-title">
+        <div>
+          <p class="eyebrow">BUILT IN THE OPEN</p>
+          <h2 id="open-source-title">小小办公室，欢迎新想法。</h2>
+          <p>
+            发现问题、提出建议，或提交你的第一个改进。<br />一起把这个工作空间变得更好。
+          </p>
+        </div>
+        <a
+          class="button primary"
+          href="https://github.com/chenzhiyong1994/capsule-office"
+          >在 GitHub 上参与 <span aria-hidden="true">↗</span></a
+        >
+      </section>
+    </main>
+    <footer class="site-footer wrap">
+      <a class="brand" href="./"
+        ><img src="./assets/capsule.svg" width="28" height="28" alt="" /><span
+          >capsule<span class="brand-light">office</span></span
+        ></a
+      ><span>© 2026 Capsule Office contributors · MIT</span>
+      <div>
+        <a href="https://github.com/chenzhiyong1994/capsule-office">源码</a
+        ><a href="https://github.com/chenzhiyong1994/capsule-office/issues"
+          >反馈</a
+        ><a
+          href="https://github.com/chenzhiyong1994/capsule-office/blob/main/LICENSE"
+          >许可证</a
+        >
+      </div>
+    </footer>
+  </body>
+</html>
