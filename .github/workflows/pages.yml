@@ -31,6 +31,8 @@ jobs:
           node --check electron/preload.js
       - name: Build homepage and browser demo
         run: npm run build:site
+      - name: Check demo playback lifecycle
+        run: node --test tests/preview-playback.test.mjs
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3

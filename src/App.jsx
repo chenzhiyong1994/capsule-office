@@ -1,6 +1,8 @@
 import { startTransition, useEffect, useMemo, useRef, useState } from "react";
 import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
+import { createPreviewPlayback } from "./preview-playback.mjs";
+import { createPreviewFrames, previewTranscript } from "./preview-scenarios.mjs";
 
 const APP_NAME_ZH = "胶囊办公室";
 const APP_NAME_EN = "Capsule Office";
@@ -257,9 +259,14 @@ function clonePreviewSnapshot(snapshot) {
 }
 
 let browserPreviewSnapshot = clonePreviewSnapshot(PREVIEW_SNAPSHOT);
+for (const employee of browserPreviewSnapshot.employees) {
+  browserPreviewSnapshot.sessions[employee.id].terminalHistory = [previewTranscript(employee.agentType)];
+}
 let browserPreviewEmployeeSequence = PREVIEW_EMPLOYEES.length + 1;
 const browserPreviewStateListeners = new Set();
 const browserPreviewTerminalListeners = new Set();
+const browserPreviewPlayers = new Map();
+const browserPreviewPlaybackListeners = new Set();
 
 function emitBrowserPreviewState() {
   const snapshot = clonePreviewSnapshot(browserPreviewSnapshot);
@@ -269,9 +276,36 @@ function emitBrowserPreviewState() {
 }
 
 function emitBrowserPreviewTerminal(employeeId, chunk) {
+  const session = browserPreviewSnapshot.sessions[employeeId];
+  if (session) session.terminalHistory = [...(session.terminalHistory ?? []), chunk].slice(-200);
   for (const handler of browserPreviewTerminalListeners) {
     handler({ employeeId, chunk });
   }
+}
+
+function getBrowserPreviewPlayer(employeeId) {
+  if (browserPreviewPlayers.has(employeeId)) return browserPreviewPlayers.get(employeeId);
+  const employee = browserPreviewSnapshot.employees.find(item => item.id === employeeId);
+  if (!employee) return null;
+  const player = createPreviewPlayback({
+    frames: createPreviewFrames(employee.agentType),
+    onFrame: frame => {
+      const session = browserPreviewSnapshot.sessions[employeeId];
+      if (!session) return;
+      if (frame.reset) session.terminalHistory = [];
+      emitBrowserPreviewTerminal(employeeId, (frame.reset ? "\x1bc" : "") + frame.text);
+      if (frame.context !== undefined) {
+        session.metrics = { ...session.metrics, contextUsagePercent: frame.context, contextUsageSource: "estimated" };
+        setBrowserPreviewSessionStatus(employeeId, "running", { activityState: "working", lastSummary: `模拟操作：${frame.stage}` });
+      }
+    },
+    onState: playback => {
+      if (playback.completed) setBrowserPreviewSessionStatus(employeeId, "running", { activityState: "waiting" });
+      for (const handler of browserPreviewPlaybackListeners) handler({ employeeId, ...playback });
+    }
+  });
+  browserPreviewPlayers.set(employeeId, player);
+  return player;
 }
 
 function setBrowserPreviewSessionStatus(employeeId, status, extras = {}) {
@@ -352,6 +386,8 @@ const BROWSER_PREVIEW_API = {
     return clonePreviewSnapshot(browserPreviewSnapshot.employees[index]);
   },
   removeEmployee: async (employeeId) => {
+    browserPreviewPlayers.get(employeeId)?.destroy();
+    browserPreviewPlayers.delete(employeeId);
     browserPreviewSnapshot.employees = browserPreviewSnapshot.employees.filter((item) => item.id !== employeeId);
     delete browserPreviewSnapshot.sessions[employeeId];
     emitBrowserPreviewState();
@@ -364,10 +400,11 @@ const BROWSER_PREVIEW_API = {
       exitCode: null,
       lastSummary: "浏览器预览会话已模拟启动。真实 PTY 请打开 Electron 应用。"
     });
-    emitBrowserPreviewTerminal(employeeId, "\r\n[preview] Browser preview session started. Open Electron for real PTY control.\r\n");
+    getBrowserPreviewPlayer(employeeId)?.replay();
     return clonePreviewSnapshot(session);
   },
   stopSession: async (employeeId) => {
+    browserPreviewPlayers.get(employeeId)?.pause();
     const session = setBrowserPreviewSessionStatus(employeeId, "stopped", {
       activityState: "waiting",
       exitCode: 0,
@@ -766,6 +803,7 @@ export default function App() {
   snapshotRef.current = snapshot;
   const pixelOffice = useMemo(() => getPixelOfficeApi(), []);
   const isPreviewMode = pixelOffice.previewMode === true;
+  const isShowcaseMode = isPreviewMode && new URLSearchParams(window.location.search).get("showcase") === "1";
   const activeTheme = THEME_DEFINITIONS[themeId] ?? THEME_DEFINITIONS.wood;
 
   const selectedEmployee = useMemo(
@@ -814,6 +852,46 @@ export default function App() {
       window.localStorage.setItem(THEME_STORAGE_KEY, themeId);
     } catch {}
   }, [activeTheme.colorScheme, themeId]);
+
+  useEffect(() => {
+    if (!isPreviewMode) return undefined;
+    return () => {
+      for (const player of browserPreviewPlayers.values()) player.destroy();
+      browserPreviewPlayers.clear();
+    };
+  }, [isPreviewMode]);
+
+  useEffect(() => {
+    if (!isShowcaseMode || !selectedId || window.parent === window) return undefined;
+    const player = getBrowserPreviewPlayer(selectedId);
+    if (!player) return undefined;
+    const post = (type, data = {}) => window.parent.postMessage({ type, ...data }, window.location.origin);
+    const onPlayback = playback => {
+      if (playback.employeeId === selectedId) post("capsule:playback", playback);
+    };
+    const onCommand = event => {
+      if (event.source !== window.parent || event.origin !== window.location.origin || event.data?.type !== "capsule:command") return;
+      const { theme, action, playing } = event.data;
+      if (ACTIVE_THEME_IDS.has(theme)) setThemeId(theme);
+      if (action === "replay") player.replay();
+      else if (typeof playing === "boolean") playing ? player.play() : player.pause();
+    };
+    browserPreviewPlaybackListeners.add(onPlayback);
+    window.addEventListener("message", onCommand);
+    post("capsule:ready");
+    onPlayback({ employeeId: selectedId, ...player.getState() });
+    return () => {
+      browserPreviewPlaybackListeners.delete(onPlayback);
+      window.removeEventListener("message", onCommand);
+      player.pause();
+    };
+  }, [isShowcaseMode, selectedId]);
+
+  useEffect(() => {
+    if (isShowcaseMode && window.parent !== window) {
+      window.parent.postMessage({ type: "capsule:theme", theme: themeId }, window.location.origin);
+    }
+  }, [isShowcaseMode, themeId]);
 
   useEffect(() => {
     if (!message.text) {
@@ -991,6 +1069,12 @@ export default function App() {
 
     terminal.reset();
     enableTerminalLineWrap(terminal);
+    const previewHistory = snapshotRef.current.sessions[employeeId]?.terminalHistory;
+    if (isPreviewMode && previewHistory?.length) {
+      placeholderStateRef.current.set(employeeId, false);
+      terminal.write(previewHistory.join(""));
+      return;
+    }
     placeholderStateRef.current.set(employeeId, true);
 
     if (!employee) {
@@ -1013,6 +1097,11 @@ export default function App() {
     terminal.reset();
     enableTerminalLineWrap(terminal);
     placeholderStateRef.current.set(employeeId, false);
+
+    if (isPreviewMode && session?.terminalHistory?.length) {
+      terminal.write(session.terminalHistory.join(""));
+      return;
+    }
 
     if (!employee || !isLiveTerminalStatus(session?.status)) {
       writeTerminalPlaceholder(employeeId);
@@ -1154,9 +1243,9 @@ export default function App() {
 
     const terminal = new Terminal({
       fontFamily: '"Cascadia Mono", "Cascadia Code", "Consolas", monospace',
-      fontSize: 12,
+      fontSize: isShowcaseMode ? 15 : 12,
       fontWeight: "500",
-      lineHeight: 1.12,
+      lineHeight: isShowcaseMode ? 1.35 : 1.12,
       cursorBlink: false,
       allowTransparency: true,
       convertEol: false,
@@ -1627,7 +1716,7 @@ export default function App() {
   }
 
   return (
-    <div className="app-shell control-console" data-theme={themeId}>
+    <div className={`app-shell control-console${isShowcaseMode ? " showcase-mode" : ""}`} data-theme={themeId}>
       <header className="control-topbar">
         <div className="control-brand">
           <BrandMark />

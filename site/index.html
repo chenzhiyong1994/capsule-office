@@ -218,7 +218,7 @@
               <p class="eyebrow">02 / MAKE YOURSELF AT HOME</p>
               <h2 id="workspace-title">你的工作空间，<br />也可以很有个性。</h2>
             </div>
-            <div class="theme-picker" role="group" aria-label="选择截图主题">
+            <div class="theme-picker" role="group" aria-label="选择演示主题">
               <button type="button" data-theme="midnight" aria-pressed="true">
                 <i class="swatch midnight"></i>黑夜</button
               ><button type="button" data-theme="daylight" aria-pressed="false">
@@ -232,26 +232,36 @@
             <div class="product-chrome">
               <span><i class="status-light"></i> CAPSULE OFFICE</span
               ><span id="preview-label">黑夜 / MIDNIGHT</span
-              ><span>INTERFACE PREVIEW</span>
+              ><span>LIVE SESSION DEMO</span>
             </div>
-            <img
-              id="product-preview"
-              src="./assets/preview-midnight.jpg"
-              width="1600"
-              height="980"
-              alt="胶囊办公室黑夜主题界面：左侧员工列表、中间终端、右侧会话状态与用量"
-              loading="lazy"
-            />
+            <div class="preview-viewport">
+              <iframe
+                id="product-preview"
+                src="./demo/?showcase=1"
+                title="胶囊办公室模拟操作会话，可切换员工、主题并观看终端执行过程"
+                width="1440"
+                height="860"
+                loading="lazy"
+              ></iframe>
+            </div>
+            <div class="playback-toolbar">
+              <div class="playback-caption"><span class="status-light"></span><span id="playback-stage" role="status">模拟会话 · 准备就绪</span></div>
+              <div class="playback-controls">
+                <button type="button" id="toggle-playback" disabled>播放演示</button>
+                <button type="button" id="replay-preview" disabled>↺ 重播</button>
+              </div>
+            </div>
+            <div class="playback-track" aria-hidden="true"><span id="playback-progress"></span></div>
             <figcaption>
-              <span>真实应用界面 · 截图使用浏览器模拟数据</span
+              <span>真实应用界面 · 模拟任务、代码修改与测试输出</span
               ><a href="./demo/"
                 >打开可交互演示 <span aria-hidden="true">↗</span></a
               >
             </figcaption>
           </figure>
           <p class="preview-note">
-            在线演示可切换主题、查看员工和模拟启停；真实
-            CLI、项目目录访问与终端输入需在本地桌面应用中使用。
+            点击左侧员工可切换 Claude Code / Codex CLI 会话，使用上方按钮暂停或重播。
+            所有操作与输出均为预设演示；真实 CLI 与项目操作需在本地桌面应用中使用。
           </p>
         </div>
       </section>

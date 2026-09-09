@@ -4525,3 +4525,35 @@ select:disabled {
     justify-content: flex-start;
   }
 }
+
+/* The embedded demo uses the same app and terminal, with a compact layout on phones. */
+.showcase-mode .terminal-stage-frame::before,
+.showcase-mode .terminal-stage-frame::after { display: none; }
+@media (max-width: 800px) {
+  .control-console.showcase-mode { height: 100vh; min-height: 0; overflow: hidden; }
+  .showcase-mode .control-topbar { min-height: 56px; padding: 10px 12px; flex-wrap: nowrap; }
+  .showcase-mode .control-brand { flex-direction: row; align-items: center; }
+  .showcase-mode .brand-wordmark strong { font-size: 17px; }
+  .showcase-mode .brand-wordmark > span,
+  .showcase-mode .control-topbar-actions { display: none; }
+  .showcase-mode .control-layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 87px minmax(0, 1fr);
+    overflow: hidden;
+    gap: 8px;
+  }
+  .showcase-mode .operator-sidebar { min-height: 0; grid-template-rows: 1fr; }
+  .showcase-mode .sidebar-head,
+  .showcase-mode .sidebar-foot,
+  .showcase-mode .intel-sidebar { display: none; }
+  .showcase-mode .operator-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 7px; }
+  .showcase-mode .operator-card { min-height: 0; padding: 10px; }
+  .showcase-mode .terminal-workspace { min-height: 0; height: auto; }
+  .showcase-mode .terminal-topline { flex-direction: row; align-items: center; padding-inline: 10px; }
+  .showcase-mode .terminal-title { gap: 5px; }
+  .showcase-mode .terminal-title strong { font-size: 10px; }
+  .showcase-mode .terminal-title em { max-width: 90px; font-size: 10px; }
+  .showcase-mode .terminal-actions { gap: 4px; }
+  .showcase-mode .terminal-actions button { padding-inline: 7px; font-size: 10px; }
+  .showcase-mode .terminal-actions button:last-child { display: none; }
+}

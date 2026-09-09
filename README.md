@@ -37,9 +37,11 @@ npm run app
 
 ## 在线演示
 
-[GitHub Pages 演示](https://chenzhiyong1994.github.io/capsule-office/demo/)复用桌面应用的 React 界面，使用内置模拟员工、状态和用量，可以切换主题、选择员工、模拟启停。刷新后模拟会话重置；主题偏好会保留。
+[项目主页](https://chenzhiyong1994.github.io/capsule-office/#workspace)嵌入真实 React / xterm.js 界面，演示输入任务、读取文件、修改代码、运行测试与返回结果的过程。支持暂停、重播、主题和 Agent 切换；离开可见区域会暂停，系统设置减少动态效果时不会自动播放。
 
-浏览器演示不会启动真实 Agent，无法访问本地项目目录，终端输入不会执行。截图同样使用模拟数据。真实工作请在本地 Electron 应用中进行。
+[完整界面演示](https://chenzhiyong1994.github.io/capsule-office/demo/)提供预置的模拟终端记录，点击启动可以回放该 Agent 的操作过程。刷新后模拟会话重置；主题偏好会保留。
+
+所有任务、文件修改、测试通过数与用量均为演示脚本，不是实际执行结果。浏览器演示不会启动真实 Agent，无法访问本地项目目录，终端输入不会执行。真实工作请在本地 Electron 应用中进行。
 
 ## 开发与验证
 
@@ -58,6 +60,7 @@ npm run build
 npm run build:site
 node --check electron/main.js
 node --check electron/preload.js
+node --test tests/preview-playback.test.mjs
 npm run check:runtime  # 构建后验证 Electron、原生 PTY、渲染器与 preload IPC
 npm audit
 git diff --check
